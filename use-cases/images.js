@@ -77,35 +77,7 @@ const listImages = async (query) => {
     const total = await Image.countDocuments(filter);
 
     return {
-      images: images.map((i) => {
-        i.description = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum felis justo, vulputate eu semper eget,
-            euismod in libero. Nam at neque vel odio scelerisque egestas. Maecenas porttitor molestie dui,
-            in dignissim tellus lacinia ac. Aliquam suscipit tellus quis justo bibendum, congue pellentesque metus tristique.
-            Maecenas ut cursus enim. Duis suscipit mi mi, sed dapibus libero tincidunt at. Praesent et enim et eros fringilla imperdiet.
-            Nunc egestas in turpis at venenatis.
-            Maecenas maximus orci sed placerat placerat. Donec nunc massa, tempus vitae odio a, molestie scelerisque nisi.
-            Vivamus porta risus eget ornare dapibus. Curabitur dignissim suscipit orci, a rutrum nisl egestas eget.
-            Nam tristique, magna vitae commodo mattis, ante nunc sodales sem, euismod vehicula sem lacus a ante.
-            Nulla euismod est risus, eu mollis risus tempor in. Curabitur nibh odio, interdum id est nec, auctor venenatis ex.
-            Sed vel purus ut massa elementum lacinia.
-            Quisque varius erat at tortor tempus finibus. Suspendisse finibus diam in viverra accumsan.
-            Sed rhoncus maximus urna faucibus pharetra. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-            turpis egestas. Duis quis sem mauris. Vestibulum a maximus neque. Phasellus facilisis, est eu iaculis cursus, ipsum
-            lectus viverra orci, sed ultricies est nunc ut sapien. Aliquam laoreet ut elit quis sagittis. Integer posuere non nulla
-            eget hendrerit. Praesent molestie sodales auctor. Nam quis orci vel mauris commodo mattis. Vivamus aliquam porta euismod.
-            Integer tempus purus nec justo ultricies molestie.
-            Nullam dapibus, eros id vehicula condimentum, elit nibh fermentum urna, id ornare massa massa eget nisi.
-            Nullam eu sagittis purus, et viverra lectus. Praesent id lacus et enim pharetra euismod vel nec risus. Duis sit amet
-            eleifend augue. Praesent semper lorem ac varius congue. Suspendisse vel elit vel tellus laoreet consequat lobortis id metus.
-            In hac habitasse platea dictumst. Aliquam erat volutpat. Donec vel metus nisi. Praesent mauris nunc,
-            luctus vel efficitur eu, sagittis et felis. Aliquam erat volutpat.
-            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris dolor ligula,
-            condimentum ut vehicula sed, tristique sit amet velit. Ut ullamcorper ut mauris id semper.
-            Pellentesque eleifend velit vitae massa hendrerit ornare. Pellentesque nisi nunc, maximus in orci nec, eleifend tempor nulla.
-            Ut euismod non nisl vitae placerat. Sed justo nisi, scelerisque eget orci non, pulvinar congue arcu. Sed luctus metus sed
-            massa dapibus, quis dapibus enim ultricies.`;
-        return i;
-      }),
+      images,
       total,
     };
   } catch (error) {

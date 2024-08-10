@@ -60,7 +60,7 @@ const getClassificationTags = async (imageUrl) => {
         return tags;
     } catch (error) {
         console.error('Erro ao buscar tags:', error);
-        return [];
+        throw error;
     }
 };
 
@@ -73,7 +73,7 @@ const getColors = async (imageUrl) => {
                         imageUri: imageUrl
                     }
                 },
-                features: [{ type: "IMAGE_PROPERTIES", maxResults: 10 }]
+                features: [{ type: "IMAGE_PROPERTIES", maxResults: 5 }]
             }]
         };
 
@@ -86,7 +86,7 @@ const getColors = async (imageUrl) => {
         return collors.map(color => { return { ...color.color, score: color.score, pixelFraction: color.pixelFraction }});
     } catch (error) {
         console.error('Erro ao buscar tags:', error);
-        return [];
+        throw error;
     }
 }
 
