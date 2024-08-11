@@ -80,7 +80,7 @@ const pocoX3Pro = (metadataPhoto) => {
     const camera = 'Poco X3 Pro'
     const lens = lensEnum[Number(metadataPhoto.ApertureValue?.description)];
     const iso = metadataPhoto.ISOSpeedRatings?.value;
-    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description;
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'Auto';
     const flash = flashEnum[metadataPhoto.Flash?.description];
     const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
     const aperture = metadataPhoto.ApertureValue?.description;
