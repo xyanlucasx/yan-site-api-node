@@ -116,6 +116,55 @@ const pocoX3Pro = (metadataPhoto) => {
     };
 }
 
+const lumia640 = (metadataPhoto) => {
+    const whiteBalanceEnum = {
+        "Auto white balance": "Auto",
+    }
+
+    const flashEnum = {
+        "Flash did not fire": "Off",
+    }
+
+    const camera = 'Nokia Lumia 640'
+    const lens = 'Wide';
+    const iso = metadataPhoto.ISOSpeedRatings?.value;
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description;
+    const flash = flashEnum[metadataPhoto.Flash?.description];
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
+    const aperture = metadataPhoto.ApertureValue?.description;
+    const latitude = metadataPhoto.GPSLatitude?.description;
+    const longitude = metadataPhoto.GPSLongitude?.description;
+    const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
+    const takenAt = convertDateFormat(metadataPhoto.DateTimeOriginal?.description)
+    const fullSizeWidth = metadataPhoto["Image Width"]?.value;
+    const fullSizeHeight = metadataPhoto["Image Height"]?.value;
+    const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
+    const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 15);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 15);
+
+    return {
+        camera,
+        lens,
+        iso,
+        shutterSpeed,
+        flash,
+        whiteBalance,
+        aperture,
+        latitude,
+        longitude,
+        cameraTrueDirection,
+        takenAt,
+        fullSizeWidth,
+        fullSizeHeight,
+        optimizedWidth,
+        optimizedHeight,
+        thumbnailWidth,
+        thumbnailHeight
+    };
+}
+
+
 const djiMini2 = (metadataPhoto) => {
     const whiteBalanceEnum = {
         "Auto white balance": "Auto",
@@ -269,7 +318,9 @@ const getByModel = (model, metadataPhoto) => {
         "M2102J20SG": pocoX3Pro,
         "FC7303": djiMini2,
         "HERO9 Black": hero9Black,
-        "ZV-E10": sonyZvE10
+        "ZV-E10": sonyZvE10,
+        "--": pocoX3Pro,
+        "RM-1109": lumia640
 
     }
 
