@@ -24,12 +24,12 @@ const iphone12ProMax = (metadataPhoto) => {
     }
 
     const camera = 'iPhone 12 Pro Max';
-    const lens = lensEnum[metadataPhoto.LensModel?.description];
-    const iso = metadataPhoto.ISOSpeedRatings?.value;
-    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description;
-    const flash = flashEnum[metadataPhoto.Flash?.description];
-    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
-    const aperture = metadataPhoto.ApertureValue?.description;
+    const lens = lensEnum[metadataPhoto.LensModel?.description] || 'N/A';
+    const iso = metadataPhoto.ISOSpeedRatings?.value || 'N/A';
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'N/A';
+    const flash = flashEnum[metadataPhoto.Flash?.description] || 'Off';
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
+    const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
     const latitude = metadataPhoto.GPSLatitude?.description;
     const longitude = metadataPhoto.GPSLongitude?.description;
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
@@ -78,12 +78,12 @@ const pocoX3Pro = (metadataPhoto) => {
     }
 
     const camera = 'Poco X3 Pro'
-    const lens = lensEnum[Number(metadataPhoto.ApertureValue?.description)];
-    const iso = metadataPhoto.ISOSpeedRatings?.value;
-    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'Auto';
-    const flash = flashEnum[metadataPhoto.Flash?.description];
-    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
-    const aperture = metadataPhoto.ApertureValue?.description;
+    const lens = lensEnum[Number(metadataPhoto.ApertureValue?.description)] || 'N/A';
+    const iso = metadataPhoto.ISOSpeedRatings?.value || 'N/A';
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'N/A';
+    const flash = flashEnum[metadataPhoto.Flash?.description] || 'Off';
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
+    const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
     const latitude = metadataPhoto.GPSLatitude?.description;
     const longitude = metadataPhoto.GPSLongitude?.description;
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
@@ -127,13 +127,13 @@ const lumia640 = (metadataPhoto) => {
 
     const camera = 'Nokia Lumia 640'
     const lens = 'Wide';
-    const iso = metadataPhoto.ISOSpeedRatings?.value;
-    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description;
-    const flash = flashEnum[metadataPhoto.Flash?.description];
-    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
-    const aperture = metadataPhoto.ApertureValue?.description;
-    const latitude = metadataPhoto.GPSLatitude?.description;
-    const longitude = metadataPhoto.GPSLongitude?.description;
+    const iso = metadataPhoto.ISOSpeedRatings?.value || 'N/A';
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'N/A';
+    const flash = flashEnum[metadataPhoto.Flash?.description] || 'Off';
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
+    const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
+    const latitude = metadataPhoto.GPSLatitude?.description || 'N/A';
+    const longitude = metadataPhoto.GPSLongitude?.description || 'N/A';
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
     const takenAt = convertDateFormat(metadataPhoto.DateTimeOriginal?.description)
     const fullSizeWidth = metadataPhoto["Image Width"]?.value;
@@ -179,11 +179,11 @@ const djiMini2 = (metadataPhoto) => {
 
     const camera = 'DJI Mini 2'
     const lens = '24mm'
-    const iso = metadataPhoto.ISOSpeedRatings?.value;
-    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description;
+    const iso = metadataPhoto.ISOSpeedRatings?.value || 'N/A';
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'N/A';
     const flash = "Off";
-    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
-    const aperture = metadataPhoto.ApertureValue?.description;
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
+    const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
     const latitude = metadataPhoto.GPSLatitude?.description * latitudeRef;
     const longitude = metadataPhoto.GPSLongitude?.description * longitudeRef;
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
@@ -227,11 +227,11 @@ const hero9Black = (metadataPhoto) => {
 
     const camera = 'Go Pro Hero 9 Black'
     const lens = '16mm'
-    const iso = metadataPhoto.ISOSpeedRatings?.value;
-    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description;
+    const iso = metadataPhoto.ISOSpeedRatings?.value || 'N/A';
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'N/A';
     const flash = "Off";
-    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
-    const aperture = metadataPhoto.ApertureValue?.description;
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
+    const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
     const latitude = metadataPhoto.GPSLatitude?.description;
     const longitude = metadataPhoto.GPSLongitude?.description;
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
@@ -274,12 +274,12 @@ const sonyZvE10 = (metadataPhoto) => {
     }
 
     const camera = 'Sony ZV-E10'
-    const lens = metadataPhoto.LensModel?.description;
-    const iso = metadataPhoto.ISOSpeedRatings?.value;
-    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description;
+    const lens = metadataPhoto.LensModel?.description || 'N/A';
+    const iso = metadataPhoto.ISOSpeedRatings?.value || 'N/A';
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'N/A';
     const flash = "Off";
-    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description];
-    const aperture = metadataPhoto.ApertureValue?.description;
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
+    const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
     const latitude = metadataPhoto.GPSLatitude?.description;
     const longitude = metadataPhoto.GPSLongitude?.description;
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
