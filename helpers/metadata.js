@@ -132,8 +132,8 @@ const lumia640 = (metadataPhoto) => {
     const flash = flashEnum[metadataPhoto.Flash?.description] || 'Off';
     const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
     const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
-    const latitude = metadataPhoto.GPSLatitude?.description || 'N/A';
-    const longitude = metadataPhoto.GPSLongitude?.description || 'N/A';
+    const latitude = metadataPhoto.GPSLatitude?.description;
+    const longitude = metadataPhoto.GPSLongitude?.description;
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
     const takenAt = convertDateFormat(metadataPhoto.DateTimeOriginal?.description)
     const fullSizeWidth = metadataPhoto["Image Width"]?.value;
