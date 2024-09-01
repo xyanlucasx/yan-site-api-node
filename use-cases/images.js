@@ -65,7 +65,7 @@ const listImages = async (query) => {
       if (index === -1) {
         throw new Error("Image not found");
       }
-      pagination.limit = index + 10;
+      pagination.limit = (index < limit ? limit : index) + 10;
       pagination.offset = 0
     }
 
