@@ -26,6 +26,17 @@ router.post('/', checkToken, async (req, res) => {
     }
 });
 
+router.post('/sync', checkToken, async (req, res) => {
+    const { body } = req;
+    try {
+        await useCases.sync(body);
+        res.status(201).send(null);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erro ao enviar tag');
+    }
+});
+
 router.patch('/:id', checkToken, async (req, res) => {
     const { body, params } = req;
     try {

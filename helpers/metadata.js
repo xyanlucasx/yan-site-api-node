@@ -174,8 +174,8 @@ const djiMini2 = (metadataPhoto) => {
         "Flash did not fire, compulsory flash mode": "Off",
     }
 
-    const latitudeRef = metadataPhoto.GPSLatitudeRef.value[0] === 'S' ? -1 : 1;
-    const longitudeRef = metadataPhoto.GPSLongitudeRef.value[0] === 'W' ? -1 : 1;
+    const latitudeRef = metadataPhoto.GPSLatitudeRef?.value[0] === 'S' ? -1 : 1;
+    const longitudeRef = metadataPhoto.GPSLongitudeRef?.value[0] === 'W' ? -1 : 1;
 
     const camera = 'DJI Mini 2'
     const lens = '24mm'
@@ -184,8 +184,8 @@ const djiMini2 = (metadataPhoto) => {
     const flash = "Off";
     const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
     const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
-    const latitude = metadataPhoto.GPSLatitude?.description * latitudeRef;
-    const longitude = metadataPhoto.GPSLongitude?.description * longitudeRef;
+    const latitude = metadataPhoto.GPSLatitude?.description ? metadataPhoto.GPSLatitude?.description * latitudeRef : null;
+    const longitude = metadataPhoto.GPSLongitude?.description ? metadataPhoto.GPSLongitude?.description * longitudeRef : null;
     const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
     const takenAt = convertDateFormat(metadataPhoto.DateTimeOriginal?.description)
     const fullSizeWidth = metadataPhoto["Image Width"]?.value;
