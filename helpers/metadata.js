@@ -38,8 +38,8 @@ const iphone12ProMax = (metadataPhoto) => {
     const fullSizeHeight = metadataPhoto["Image Height"]?.value;
     const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
     const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
-    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 15);
-    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 15);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 10);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 10);
 
     return {
         camera,
@@ -92,8 +92,8 @@ const pocoX3Pro = (metadataPhoto) => {
     const fullSizeHeight = metadataPhoto["Image Height"]?.value;
     const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
     const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
-    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 15);
-    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 15);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 10);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 10);
 
     return {
         camera,
@@ -140,8 +140,8 @@ const lumia640 = (metadataPhoto) => {
     const fullSizeHeight = metadataPhoto["Image Height"]?.value;
     const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
     const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
-    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 15);
-    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 15);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 10);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 10);
 
     return {
         camera,
@@ -192,8 +192,8 @@ const djiMini2 = (metadataPhoto) => {
     const fullSizeHeight = metadataPhoto["Image Height"]?.value;
     const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
     const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
-    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 15);
-    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 15);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 10);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 10);
 
     return {
         camera,
@@ -240,8 +240,8 @@ const hero9Black = (metadataPhoto) => {
     const fullSizeHeight = metadataPhoto["Image Height"]?.value;
     const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
     const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
-    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 15);
-    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 15);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 10);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 10);
 
     return {
         camera,
@@ -288,8 +288,8 @@ const sonyZvE10 = (metadataPhoto) => {
     const fullSizeHeight = metadataPhoto["Image Height"]?.value;
     const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
     const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
-    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 15);
-    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 15);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 10);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 10);
 
     return {
         camera,
