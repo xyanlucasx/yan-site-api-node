@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const colorPaletteSchema = new mongoose.Schema({
-    red: { type: Number, required: true },
-    green: { type: Number, required: true },
-    blue: { type: Number, required: true },
-    score: { type: Number, required: true },
+    red: { type: Number, required: true, default: 0 },
+    green: { type: Number, required: true, default: 0 },
+    blue: { type: Number, required: true, default: 0 },
+    score: { type: Number, required: true, default: 0 },
     pixelFraction: { type: Number, required: true }
 });
 
