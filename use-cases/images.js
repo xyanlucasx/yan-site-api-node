@@ -262,6 +262,18 @@ const deleteImage = async (id) => {
     keysS3ToDelete.push(keyOptimized);
   });
 
+  if (deletedDocument?.original._id) {
+    const urlFullSize = new URL(deletedDocument.original.fullSizeUrl);
+    const keyFullSize = urlFullSize.pathname.substring(1);
+    keysS3ToDelete.push(keyFullSize);
+    const urlThumbnail = new URL(deletedDocument.original.thumbnailUrl);
+    const keyThumbnail = urlThumbnail.pathname.substring(1);
+    keysS3ToDelete.push(keyThumbnail);
+    const urlOptimized = new URL(deletedDocument.original.optimizedUrl);
+    const keyOptimized = urlOptimized.pathname.substring(1);
+    keysS3ToDelete.push(keyOptimized);
+  }
+
   await s3.deleteImagesToS3(keysS3ToDelete);
 
   return true;
