@@ -148,7 +148,7 @@ const uploadImage = async (files, fields) => {
       );
       uploads.push(fullSizeUrl)
 
-      const colorPalette = await getColors(fullSizeUrl);
+      const colorPalette = await getColors(optimizedUrl);
 
       allImages.push({
         thumbnailUrl,
@@ -181,7 +181,7 @@ const uploadImage = async (files, fields) => {
     }
 
     const tags = await getClassificationTags(
-      original ? original.fullSizeUrl : images[0].fullSizeUrl
+      original ? original.optimizedUrl : images[0].optimizedUrl
     );
     const image = {
       ...(description && { description }),
