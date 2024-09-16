@@ -9,6 +9,9 @@ const getCityStateCountry = async (latitude, longitude) => {
 
         const response = await axios.get(apiUrl);
 
+        console.log('location', `${latitude} , ${longitude}`)
+        console.log('location', response)
+
         if (response.status === 200) {
             const result = response.data;
 
@@ -55,6 +58,8 @@ const getClassificationTags = async (imageUrl) => {
             params: { key: process.env.GOOGLEAPIKEY }
         });
 
+        console.log("tags", imageUrl)
+        console.log("tags", response)
         const tags = response.data.responses[0].labelAnnotations.map(annotation => annotation.description);
 
         return tags;
@@ -81,6 +86,8 @@ const getColors = async (imageUrl) => {
             params: { key: process.env.GOOGLEAPIKEY }
         });
 
+        console.log("colors", imageUrl)
+        console.log("colors", response)
         const collors = response.data.responses[0].imagePropertiesAnnotation.dominantColors.colors;
 
         return collors.map(color => { return { ...color.color, score: color.score, pixelFraction: color.pixelFraction }});

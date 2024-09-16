@@ -242,7 +242,7 @@ const editImage = async (id, body) => {
 };
 
 const deleteImage = async (id) => {
-  const deletedDocument = await Image.findByIdAndDelete(id);
+  const deletedDocument = await Image.findById(id);
 
   if (!deletedDocument) {
     throw new Error("Documento não encontrado");
@@ -262,7 +262,7 @@ const deleteImage = async (id) => {
     keysS3ToDelete.push(keyOptimized);
   });
 
-  if (deletedDocument?.original._id) {
+  if (deletedDocument?.original?._id) {
     const urlFullSize = new URL(deletedDocument.original.fullSizeUrl);
     const keyFullSize = urlFullSize.pathname.substring(1);
     keysS3ToDelete.push(keyFullSize);
@@ -275,6 +275,8 @@ const deleteImage = async (id) => {
   }
 
   await s3.deleteImagesToS3(keysS3ToDelete);
+
+  await Image.findByIdAndDelete(id);
 
   return true;
 };
