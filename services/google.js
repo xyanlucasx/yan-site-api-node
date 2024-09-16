@@ -1,4 +1,5 @@
 const axios = require('axios');
+const util = require('util');
 
 // Função para obter informações de cidade, estado e país a partir de latitude e longitude
 const getCityStateCountry = async (latitude, longitude) => {
@@ -10,8 +11,7 @@ const getCityStateCountry = async (latitude, longitude) => {
         const response = await axios.get(apiUrl);
 
         console.log('location', `${latitude} , ${longitude}`)
-        console.log('location', response)
-
+        console.log(util.inspect(response, { showHidden: false, depth: null, colors: true }));
         if (response.status === 200) {
             const result = response.data;
 
@@ -59,7 +59,7 @@ const getClassificationTags = async (imageUrl) => {
         });
 
         console.log("tags", imageUrl)
-        console.log("tags", response)
+        console.log(util.inspect(response, { showHidden: false, depth: null, colors: true }));
         const tags = response.data.responses[0].labelAnnotations.map(annotation => annotation.description);
 
         return tags;
@@ -87,7 +87,7 @@ const getColors = async (imageUrl) => {
         });
 
         console.log("colors", imageUrl)
-        console.log("colors", response)
+        console.log(util.inspect(response, { showHidden: false, depth: null, colors: true }));
         const collors = response.data.responses[0].imagePropertiesAnnotation.dominantColors.colors;
 
         return collors.map(color => { return { ...color.color, score: color.score, pixelFraction: color.pixelFraction }});
