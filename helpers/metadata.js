@@ -312,6 +312,54 @@ const sonyZvE10 = (metadataPhoto) => {
     };
 }
 
+const generic = (metadataPhoto) => {
+    const whiteBalanceEnum = {
+        "Auto white balance": "Auto",
+    }
+
+    const flashEnum = {
+        "Flash did not fire, compulsory flash mode": "Off",
+    }
+
+    const camera = metadataPhoto.Model?.description || 'N/A';
+    const lens = metadataPhoto.LensModel?.description || 'N/A';
+    const iso = metadataPhoto.ISOSpeedRatings?.value || 'N/A';
+    const shutterSpeed = metadataPhoto.ShutterSpeedValue?.description || 'N/A';
+    const flash = "Off";
+    const whiteBalance = whiteBalanceEnum[metadataPhoto.WhiteBalance?.description] || 'Auto';
+    const aperture = metadataPhoto.ApertureValue?.description || 'N/A';
+    const latitude = metadataPhoto.GPSLatitude?.description;
+    const longitude = metadataPhoto.GPSLongitude?.description;
+    const cameraTrueDirection = metadataPhoto.GPSImgDirection?.description;
+    const takenAt = convertDateFormat(metadataPhoto.DateTimeOriginal?.description)
+    const fullSizeWidth = metadataPhoto["Image Width"]?.value;
+    const fullSizeHeight = metadataPhoto["Image Height"]?.value;
+    const optimizedWidth = Math.round(metadataPhoto["Image Width"]?.value / 3);
+    const optimizedHeight = Math.round(metadataPhoto["Image Height"]?.value / 3);
+    const thumbnailWidth = Math.round(metadataPhoto["Image Width"]?.value / 10);
+    const thumbnailHeight = Math.round(metadataPhoto["Image Height"]?.value / 10);
+
+    return {
+        camera,
+        lens,
+        iso,
+        shutterSpeed,
+        flash,
+        whiteBalance,
+        aperture,
+        latitude,
+        longitude,
+        cameraTrueDirection,
+        takenAt,
+        fullSizeWidth,
+        fullSizeHeight,
+        optimizedWidth,
+        optimizedHeight,
+        thumbnailWidth,
+        thumbnailHeight
+    };
+}
+
 const getByModel = (model, metadataPhoto) => {
     const models = {
         "iPhone 12 Pro Max": iphone12ProMax,
@@ -320,14 +368,16 @@ const getByModel = (model, metadataPhoto) => {
         "HERO9 Black": hero9Black,
         "ZV-E10": sonyZvE10,
         "--": pocoX3Pro,
-        "RM-1109": lumia640
-
+        "RM-1109": lumia640,
+        "Generic": generic
     }
 
     const funcToGet = models[model];
 
     if (!funcToGet) {
-        throw new Error('Modelo de câmera não suportado');
+        console.log('Modelo de câmera não suportado', model);
+        console.log(metadataPhoto);
+        return generic(metadataPhoto);
     }
 
     return funcToGet(metadataPhoto);
@@ -337,7 +387,9 @@ const getMetadata = (buffer) => {
     const metadataPhoto = ExifReader.load(buffer);
     const camera = metadataPhoto.Model?.description;
     if (!camera) {
-        throw new Error('Modelo de câmera não encontrado');
+        console.log('Modelo de câmera não encontrado');
+        console.log(metadataPhoto);
+        return generic(metadataPhoto);
     }
     return getByModel(camera, metadataPhoto);
 }
