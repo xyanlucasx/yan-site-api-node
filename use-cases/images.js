@@ -3,8 +3,7 @@ const sharp = require("sharp");
 const Image = require("../models/Image");
 const {
   getCityStateCountry,
-  getClassificationTags,
-  getColors,
+  getTagsAndColors,
 } = require("../services/google");
 
 const { getMetadata } = require("../helpers/metadata");
@@ -31,8 +30,8 @@ const listImages = async (query) => {
     const filter = {};
     const pagination = {
       offset: parseInt(offset) || 0,
-      limit: parseInt(limit) || 10
-    }
+      limit: parseInt(limit) || 10,
+    };
     if (tags) filter["tags"] = { $in: tags };
     if (country) filter["country"] = { $in: country };
     if (state) filter["state"] = { $in: state };
@@ -58,15 +57,14 @@ const listImages = async (query) => {
 
     //strategy to use image routes and keep navigation inside modal working
     if (id) {
-      const allImages = await Image.find(filter)
-        .sort(sortQuery)
+      const allImages = await Image.find(filter).sort(sortQuery);
 
-      const index = allImages.findIndex(img => img._id.toString() === id);
+      const index = allImages.findIndex((img) => img._id.toString() === id);
       if (index === -1) {
         throw new Error("Image not found");
       }
       pagination.limit = (index < limit ? limit : index) + 10;
-      pagination.offset = 0
+      pagination.offset = 0;
     }
 
     const images = await Image.find(filter)
@@ -87,7 +85,7 @@ const listImages = async (query) => {
 };
 
 const uploadImage = async (files, fields) => {
-  const uploads = []
+  const uploads = [];
   try {
     const allImages = [];
     const versionNames = fields.versionNames;
@@ -128,7 +126,7 @@ const uploadImage = async (files, fields) => {
         thumbnailBuffer,
         mimetype
       );
-      uploads.push(thumbnailUrl)
+      uploads.push(thumbnailUrl);
 
       const optimizedName = `${uniqueName}-optimized.${fileExtension}`;
       const optimizedBuffer = await sharp(buffer)
@@ -139,26 +137,31 @@ const uploadImage = async (files, fields) => {
         optimizedBuffer,
         mimetype
       );
-      uploads.push(optimizedUrl)
+      uploads.push(optimizedUrl);
 
       const fullSizeUrl = await s3.uploadImageToS3(
         `${uniqueName}.${fileExtension}`,
         buffer,
         "application/octet-stream"
       );
-      uploads.push(fullSizeUrl)
-
-      const colorPalette = await getColors(optimizedUrl);
+      uploads.push(fullSizeUrl);
 
       allImages.push({
         thumbnailUrl,
         optimizedUrl,
         fullSizeUrl,
         versionName,
-        lazyThumbnailBase64: `data:image/webp;base64,${lazyThumbnailBase64}`,
-        colorPalette,
+        lazyThumbnailBase64: `data:image/webp;base64,${lazyThumbnailBase64}`
       });
     }
+
+    const { colors, tags } = await getTagsAndColors(
+      allImages.map((image) => image.optimizedUrl)
+    );
+
+    allImages.forEach((image, index) => {
+      image.colorPalette = colors[index];
+    });
 
     const original = allImages.find(
       (image) => image.versionName.toLowerCase() === "original"
@@ -167,22 +170,19 @@ const uploadImage = async (files, fields) => {
       (image) => image.versionName.toLowerCase() !== "original"
     );
 
-    let country, state, city
+    let country, state, city;
 
     if (metadata.latitude && metadata.longitude) {
-    const location = await getCityStateCountry(
-      metadata.latitude,
-      metadata.longitude
-    );
+      const location = await getCityStateCountry(
+        metadata.latitude,
+        metadata.longitude
+      );
 
-    country = location.country;
-    state = location.state;
-    city = location.city;
+      country = location.country;
+      state = location.state;
+      city = location.city;
     }
 
-    const tags = await getClassificationTags(
-      original ? original.optimizedUrl : images[0].optimizedUrl
-    );
     const image = {
       ...(description && { description }),
       tags,
@@ -201,7 +201,7 @@ const uploadImage = async (files, fields) => {
     return newImage;
   } catch (err) {
     console.error(err);
-    if(uploads.length) {
+    if (uploads.length) {
       const keysS3ToDelete = [];
 
       uploads.forEach((url) => {
