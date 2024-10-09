@@ -64,12 +64,9 @@ const listImages = async (query) => {
         throw new Error("Image not found");
       }
 
-      console.log('index find: ',index)
-
       pagination.limit = (index < pagination.limit ? pagination.limit : index) + 10;
       pagination.offset = 0;
     }
-    console.log('pagination: ', pagination.limit)
     const images = await Image.find(filter)
       .sort(sortQuery)
       .skip(pagination.offset)
