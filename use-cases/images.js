@@ -66,7 +66,7 @@ const listImages = async (query) => {
 
       console.log('index find: ',index)
 
-      pagination.limit = (index < limit ? limit : index) + 10;
+      pagination.limit = (index < pagination.limi ? pagination.limit : index) + 10;
       pagination.offset = 0;
     }
     console.log('pagination: ', pagination.limit)
