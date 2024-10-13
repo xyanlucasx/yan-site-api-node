@@ -65,70 +65,18 @@ const sync = async () => {
 
     const tagsInDB = tags.map((tag) => tag.name);
 
-    //const tagsInImages = [...new Set((await Image.find({}, { tags: 1 })).map(image => image.tags).flat())];
+    const imagesWithTags = await Image.find({}, { tags: 1, _id: 1 });
 
-    const tagsInImages = [
-      "Aerial photography",
-      "Architecture",
-      "Art",
-      "Astronomy",
-      "Beach",
-      "Black and white",
-      "Bridge",
-      "Cave",
-      "Church",
-      "Cloud",
-      "Cyberpunk",
-      "Fog",
-      "Forest",
-      "Graffiti",
-      "Harbor",
-      "Lake",
-      "Landscape",
-      "Metro",
-      "Mountain",
-      "Museum",
-      "Nature",
-      "Neon",
-      "Night",
-      "Ocean",
-      "People",
-      "Reflection",
-      "Religious",
-      "River",
-      "Rural",
-      "Sand",
-      "Sky",
-      "Skyscraper",
-      "Statue",
-      "Sunrise",
-      "Sunset",
-      "Traffic",
-      "Twilight",
-      "Urban",
-      "Vehicle",
-    ];
+    const newImageTags = imagesWithTags.map((img) => {
+      return {
+        _id: img._id,
+        tags: img.tags.filter((tag) => tagsInDB.includes(tag)),
+      };
+    });
 
-    const tagsToRemove = tagsInDB
-      .filter((tag) => !tagsInImages.includes(tag))
-      .map((tag) => {
-        return {
-          name: tag,
-          code: tag.toLowerCase().replaceAll(" ", ""),
-        };
-      });
-
-    const tagsToInsert = tagsInImages
-      .filter((tag) => !tagsInDB.includes(tag))
-      .map((tag) => {
-        return {
-          name: tag,
-          code: tag.toLowerCase().replaceAll(" ", ""),
-        };
-      });
-
-    if (tagsToRemove.length) await Tag.deleteMany({ $or: tagsToRemove });
-    if (tagsToInsert.length) await Tag.insertMany(tagsToInsert);
+    await Promise.all(newImageTags.map((imgTag) =>
+        Image.updateOne({ _id: imgTag._id }, { $set: { tags: imgTag.tags } })
+      ));
 
     return true;
   } catch (error) {
