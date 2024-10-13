@@ -223,7 +223,7 @@ const editImage = async (id, body) => {
     if (!image) {
       throw new Error("Imagem não encontrada");
     }
-    const { description, tags, country, state, city, images, original } = body;
+    const { description, tags, country, state, city, images, original, metadata } = body;
     if (description) image.description = description;
     if (tags) image.tags = tags;
     if (country) image.country = country;
@@ -231,6 +231,7 @@ const editImage = async (id, body) => {
     if (city) image.city = city;
     if (images) image.images = images;
     if (original) image.original = original;
+    if (metadata.takenAt) image.metadata.takenAt = metadata.takenAt;
 
     const updatedImage = await image.save();
 
