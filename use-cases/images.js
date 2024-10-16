@@ -33,7 +33,7 @@ const listImages = async (query) => {
       offset: parseInt(offset) || 0,
       limit: parseInt(limit) || 10,
     };
-    if (tags) filter["tags"] = { $in: tags };
+    if (tags) filter["tags"] = { $all: tags };
     if (country) filter["country"] = { $in: country };
     if (state) filter["state"] = { $in: state };
     if (city) filter["city"] = { $in: city };
