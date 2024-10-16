@@ -1,6 +1,7 @@
 const s3 = require("../services/S3");
 const sharp = require("sharp");
 const Image = require("../models/Image");
+const Tag = require("../models/Tag");
 const {
   getCityStateCountry,
   getTagsAndColors,
@@ -183,9 +184,12 @@ const uploadImage = async (files, fields) => {
       city = location.city;
     }
 
+    const tagsInDB = await Tag.find();
+    const tagsInDBNames = tagsInDB.map((tag) => tag.name);
+
     const image = {
       ...(description && { description }),
-      tags,
+      tags: tags.filter((tag) => tagsInDBNames.includes(tag)),
       country,
       state,
       city,
