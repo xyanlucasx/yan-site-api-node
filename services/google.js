@@ -89,11 +89,11 @@ const getTagsAndColors = async (imagesUrls) => {
         colors: true,
       })
     );
-    const tags = response.data.responses[0].labelAnnotations.map(
+    const tags = response.data.responses[0].labelAnnotations?.map(
       (annotation) => annotation.description
     );
     const colors = response.data.responses.map((response) =>
-      response.imagePropertiesAnnotation.dominantColors.colors.map((color) => {
+      response.imagePropertiesAnnotation?.dominantColors?.colors?.map((color) => {
         return {
           ...color.color,
           score: color.score,

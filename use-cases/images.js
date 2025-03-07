@@ -156,9 +156,7 @@ const uploadImage = async (files, fields) => {
       });
     }
 
-    const { colors, tags } = await getTagsAndColors(
-      allImages.map((image) => image.optimizedUrl)
-    );
+    const { colors, tags } = await getTagsAndColors([allImages[0].optimizedUrl]);
 
     allImages.forEach((image, index) => {
       image.colorPalette = colors[index];
@@ -189,7 +187,7 @@ const uploadImage = async (files, fields) => {
 
     const image = {
       ...(description && { description }),
-      tags: tags.filter((tag) => tagsInDBNames.includes(tag)),
+      tags: tags?.filter((tag) => tagsInDBNames.includes(tag)),
       country,
       state,
       city,
