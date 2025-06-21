@@ -158,7 +158,7 @@ const uploadImage = async (files, fields) => {
       });
     }
 
-    const { colors, tags } = await getTagsAndColors([allImages[0].optimizedUrl]);
+    const { colors, tags } = await getTagsAndColors(allImages.map((image) => image.optimizedUrl));
 
     allImages.forEach((image, index) => {
       image.colorPalette = colors[index];
