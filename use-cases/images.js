@@ -6,6 +6,8 @@ const {
   getCityStateCountry,
   getTagsAndColors,
 } = require("../services/google");
+const { setImagesUrl } = require('../helpers/general');
+
 
 const { getMetadata } = require("../helpers/metadata");
 
@@ -76,7 +78,7 @@ const listImages = async (query) => {
     const total = await Image.countDocuments(filter);
 
     return {
-      images,
+      images: setImagesUrl(images),
       total,
     };
   } catch (error) {
