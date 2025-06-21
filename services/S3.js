@@ -1,18 +1,19 @@
 const { PutObjectCommand, DeleteObjectsCommand, S3Client } = require('@aws-sdk/client-s3');
 
-const {AMAZONKEY, AMAZONSECRET, AMAZONREGION, AMAZONBUCKETPHOTOSNAME} = process.env;
+const {BUCKET_KEY, BUCKET_SECRET, BUCKET_REGION, BUCKET_NAME, BUCKET_API} = process.env;
 
 const s3 = new S3Client({
     credentials: {
-        accessKeyId: AMAZONKEY,
-        secretAccessKey: AMAZONSECRET
+        accessKeyId: BUCKET_KEY,
+        secretAccessKey: BUCKET_SECRET
     },
-    region: AMAZONREGION
+    region: BUCKET_REGION,
+    endpoint: BUCKET_API
 });
 
 const uploadImageToS3 = async (key, image, mimetype) => {
     const command = new PutObjectCommand({
-        Bucket: AMAZONBUCKETPHOTOSNAME,
+        Bucket: BUCKET_NAME,
         Key: key,
         Body: image,
         ContentType: mimetype,
@@ -20,8 +21,7 @@ const uploadImageToS3 = async (key, image, mimetype) => {
 
     try {
         await s3.send(command);
-        const url = `https://${AMAZONBUCKETPHOTOSNAME}.s3.${AMAZONREGION}.amazonaws.com/${key}`
-        return url;
+        return key;
     } catch (err) {
         throw err;
     }
@@ -29,7 +29,7 @@ const uploadImageToS3 = async (key, image, mimetype) => {
 
 const deleteImagesToS3 = async (keys) => {
     const command = new DeleteObjectsCommand({
-        Bucket: AMAZONBUCKETPHOTOSNAME,
+        Bucket: BUCKET_NAME,
         Delete: {
             Objects: keys.map(key => ({ Key: key }))
         }

@@ -59,7 +59,7 @@ const getTagsAndColors = async (imagesUrls) => {
         const payload = {
           image: {
             source: {
-              imageUri: imageUrl,
+              imageUri: process.env.BUCKET_URL + '/' + imageUrl,
             },
           },
           features: [{ type: "IMAGE_PROPERTIES", maxResults: 5 }],

@@ -1,7 +1,7 @@
 const setImagesUrl = (documents) => {
     const url = process.env.BUCKET_URL
     documents.forEach(document => {
-        if (document.original._id) {
+        if (document.original?._id) {
             document.original.fullSizeUrl = `${url}/${document.original.fullSizeUrl}`
             document.original.optimizedUrl = `${url}/${document.original.optimizedUrl}`
             document.original.thumbnailUrl = `${url}/${document.original.thumbnailUrl}`

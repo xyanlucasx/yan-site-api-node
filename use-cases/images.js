@@ -202,16 +202,16 @@ const uploadImage = async (files, fields) => {
 
     await newImage.save();
 
-    return newImage;
+    const newImageWithCompleteUrl = setImagesUrl([newImage]);
+
+    return newImageWithCompleteUrl[0];
   } catch (err) {
     console.error(err);
     if (uploads.length) {
       const keysS3ToDelete = [];
 
       uploads.forEach((url) => {
-        const urlObj = new URL(url);
-        const key = urlObj.pathname.substring(1);
-        keysS3ToDelete.push(key);
+        keysS3ToDelete.push(url);
       });
 
       await s3.deleteImagesToS3(keysS3ToDelete);
@@ -233,13 +233,32 @@ const editImage = async (id, body) => {
     if (typeof country !== 'undefined') image.country = country;
     if (typeof state !== 'undefined') image.state = state;
     if (typeof city !== 'undefined') image.city = city;
-    if (typeof images !== 'undefined') image.images = images;
-    if (typeof original !== 'undefined') image.original = original;
+    if (typeof images !== 'undefined') {
+      image.images = images.map(image => {
+        image.fullSizeUrl = image.fullSizeUrl.includes('https://')
+          ? image.fullSizeUrl.substring(image.fullSizeUrl.lastIndexOf('/') + 1) : image.fullSizeUrl;
+        image.optimizedUrl = image.optimizedUrl.includes('https://')
+          ? image.optimizedUrl.substring(image.optimizedUrl.lastIndexOf('/') + 1) : image.optimizedUrl;
+        image.thumbnailUrl = image.thumbnailUrl.includes('https://')
+          ? image.thumbnailUrl.substring(image.thumbnailUrl.lastIndexOf('/') + 1) : image.thumbnailUrl;
+        return image;
+      });
+    }
+    if (typeof original !== 'undefined') {
+      image.original.fullSizeUrl = original.fullSizeUrl.includes('https://')
+        ? original.fullSizeUrl.substring(original.fullSizeUrl.lastIndexOf('/') + 1) : original.fullSizeUrl;
+      image.original.optimizedUrl = original.optimizedUrl.includes('https://')
+        ? original.optimizedUrl.substring(original.optimizedUrl.lastIndexOf('/') + 1) : original.optimizedUrl;
+      image.original.thumbnailUrl = original.thumbnailUrl.includes('https://')
+        ? original.thumbnailUrl.substring(original.thumbnailUrl.lastIndexOf('/') + 1) : original.thumbnailUrl;
+    }
     if (typeof metadata.takenAt !== 'undefined') image.metadata.takenAt = metadata.takenAt;
 
     const updatedImage = await image.save();
 
-    return updatedImage;
+    const updatedImageWithCompleteUrl = setImagesUrl([updatedImage]);
+
+    return updatedImageWithCompleteUrl[0];
   } catch (err) {
     console.error(err);
     throw new Error("Erro ao editar imagem");
@@ -255,28 +274,16 @@ const deleteImage = async (id) => {
 
   const keysS3ToDelete = [];
 
-  deletedDocument.images.forEach((image) => {
-    const urlFullSize = new URL(image.fullSizeUrl);
-    const keyFullSize = urlFullSize.pathname.substring(1);
-    keysS3ToDelete.push(keyFullSize);
-    const urlThumbnail = new URL(image.thumbnailUrl);
-    const keyThumbnail = urlThumbnail.pathname.substring(1);
-    keysS3ToDelete.push(keyThumbnail);
-    const urlOptimized = new URL(image.optimizedUrl);
-    const keyOptimized = urlOptimized.pathname.substring(1);
-    keysS3ToDelete.push(keyOptimized);
+  deletedDocument.images?.forEach((image) => {
+    keysS3ToDelete.push(image.fullSizeUrl);
+    keysS3ToDelete.push(image.thumbnailUrl);
+    keysS3ToDelete.push(image.optimizedUrl);
   });
 
   if (deletedDocument?.original?._id) {
-    const urlFullSize = new URL(deletedDocument.original.fullSizeUrl);
-    const keyFullSize = urlFullSize.pathname.substring(1);
-    keysS3ToDelete.push(keyFullSize);
-    const urlThumbnail = new URL(deletedDocument.original.thumbnailUrl);
-    const keyThumbnail = urlThumbnail.pathname.substring(1);
-    keysS3ToDelete.push(keyThumbnail);
-    const urlOptimized = new URL(deletedDocument.original.optimizedUrl);
-    const keyOptimized = urlOptimized.pathname.substring(1);
-    keysS3ToDelete.push(keyOptimized);
+    keysS3ToDelete.push(deletedDocument.original.fullSizeUrl);
+    keysS3ToDelete.push(deletedDocument.original.thumbnailUrl);
+    keysS3ToDelete.push(deletedDocument.original.optimizedUrl);
   }
 
   await s3.deleteImagesToS3(keysS3ToDelete);
